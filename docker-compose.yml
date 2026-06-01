@@ -8,6 +8,8 @@ services:
     # NET_ADMIN is critical for creating TUN interfaces (wdtt0) and managing redirect rules inside the container
     cap_add:
       - NET_ADMIN
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
     # Enables forwarding of IP packets at the container level
     sysctls:
       - net.ipv4.ip_forward=1
