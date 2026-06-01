@@ -16,8 +16,8 @@ services:
     ports:
       - "56000:56000/udp"
     environment:
-      - CLIENT_PASSWORD=change-me-please
-      - SOCKS_SERVER=127.0.0.1:1080
+      - CLIENT_PASSWORD=
+      - SOCKS_SERVER=127.0.0.1:
       - SOCKS_USER=
       - SOCKS_PASS=
     command: -listen 0.0.0.0:56000
