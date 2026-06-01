@@ -20,10 +20,4 @@ services:
       - SOCKS_SERVER=127.0.0.1:1080
       - SOCKS_USER=
       - SOCKS_PASS=
-    # Pass environment variables as command args to server_socks.go
-    command: >
-      -listen 0.0.0.0:56000
-      -password ${CLIENT_PASSWORD}
-      -socks-server ${SOCKS_SERVER}
-      -socks-user ${SOCKS_USER:-}
-      -socks-pass ${SOCKS_PASS:-}
+    command: -listen 0.0.0.0:56000

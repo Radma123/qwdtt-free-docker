@@ -894,6 +894,21 @@ func main() {
 	socksPass := flag.String("socks-pass", "", "Пароль для SOCKS5 прокси (опционально)")
 	flag.Parse()
 
+	// Override flags with environment variables if present
+	if envPass := os.Getenv("CLIENT_PASSWORD"); envPass != "" {
+		*clientPass = envPass
+	}
+	if envSocks := os.Getenv("SOCKS_SERVER"); envSocks != "" {
+		*socksServer = envSocks
+	}
+	if envUser := os.Getenv("SOCKS_USER"); envUser != "" {
+		*socksUser = envUser
+	}
+	if envPass := os.Getenv("SOCKS_PASS"); envPass != "" {
+		*socksPass = envPass
+	}
+
+
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
 	log.Println("══════════════════════════════════════════")
 	log.Println("   WDTT Server SOCKS Redirect (Stateless)")
