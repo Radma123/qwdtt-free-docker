@@ -32,11 +32,7 @@
 
 Все файлы сборки подготовлены. Для запуска через Docker выполните следующие шаги:
 
-1. Перейдите в папку `socks-relay`:
-   ```bash
-   cd socks-relay
-   ```
-2. Откройте файл `docker-compose.yml` и укажите параметры вашего SOCKS5-сервера и желаемый пароль для клиента:
+1. Откройте файл `docker-compose.yml` и укажите параметры вашего SOCKS5-сервера и желаемый пароль для клиента:
    ```yaml
    environment:
      - CLIENT_PASSWORD=ваш_пароль_для_клиента
@@ -44,7 +40,7 @@
      - SOCKS_USER=username             # Имя пользователя SOCKS (опционально)
      - SOCKS_PASS=password             # Пароль SOCKS (опционально)
    ```
-3. Запустите Docker-контейнер:
+2. Запустите Docker-контейнер:
    ```bash
    docker compose up -d --build
    ```

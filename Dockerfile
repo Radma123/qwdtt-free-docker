@@ -5,12 +5,11 @@ RUN apk add --no-cache git make gcc musl-dev
 
 WORKDIR /app
 
-# Copy dependency manifests
-COPY go.mod go.sum ./
-RUN go mod download
-
 # Copy the lightweight server source code
-COPY socks-relay/server_socks.go ./
+COPY server_socks.go ./
+
+# Initialize Go module and download dependencies dynamically
+RUN go mod init qwdtt-free-docker && go mod tidy
 
 # Build the server binary
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/server server_socks.go
