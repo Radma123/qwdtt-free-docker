@@ -3,6 +3,7 @@
 # Скрипт для удаления правил перенаправления трафика и остановки redsocks
 
 WG_IFACE="wdtt0"
+REDSOCKS_PORT="12345"
 
 if [ "$EUID" -ne 0 ]; then
   echo "Пожалуйста, запустите скрипт с правами root (sudo)."
@@ -11,6 +12,9 @@ fi
 
 echo "Удаление правила из PREROUTING..."
 iptables -t nat -D PREROUTING -i $WG_IFACE -p tcp -j REDSOCKS 2>/dev/null || true
+
+echo "Удаление правила фильтрации INPUT..."
+iptables -D INPUT -p tcp --dport $REDSOCKS_PORT ! -i $WG_IFACE -j DROP 2>/dev/null || true
 
 echo "Очистка и удаление цепочки REDSOCKS..."
 iptables -t nat -F REDSOCKS 2>/dev/null || true

@@ -30,7 +30,7 @@ base {
     redirector = iptables;
 }
 redsocks {
-    local_ip = 127.0.0.1;
+    local_ip = 0.0.0.0;
     local_port = $REDSOCKS_PORT;
     ip = $SOCKS_IP;
     port = $SOCKS_PORT;
@@ -69,6 +69,10 @@ iptables -t nat -A REDSOCKS -p tcp -j REDIRECT --to-ports $REDSOCKS_PORT
 
 # Применяем цепочку ко всему входящему трафику из интерфейса WireGuard
 iptables -t nat -A PREROUTING -i $WG_IFACE -p tcp -j REDSOCKS
+
+# Блокируем доступ к порту redsocks из внешнего мира (разрешаем только с интерфейса WireGuard)
+iptables -D INPUT -p tcp --dport $REDSOCKS_PORT ! -i $WG_IFACE -j DROP 2>/dev/null || true
+iptables -A INPUT -p tcp --dport $REDSOCKS_PORT ! -i $WG_IFACE -j DROP
 
 # Сохранение правил iptables, чтобы они оставались после перезагрузки
 netfilter-persistent save
